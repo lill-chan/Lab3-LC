@@ -4,17 +4,18 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
-// TODO CheckStyle: Wrong lexicographical order for 'java.util.HashMap' import (remove this comment once resolved)
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+import static java.util.Map.entry;
 
 /**
  * This class provides the service of converting country codes to their names.
  */
 public class CountryCodeConverter {
-
-    // TODO Task: pick appropriate instance variable(s) to store the data necessary for this class
+    // TODO (DONE) Task: pick appropriate instance variable(s) to store the data necessary for this class
+    public static final int TWOFIFTY = 250;
+    private Map<String, String> countryDictionary = new HashMap(TWOFIFTY);
+    private Map<String, String> codeDictionary = new HashMap(TWOFIFTY);
 
     /**
      * Default constructor which will load the country codes from "country-codes.txt"
@@ -34,14 +35,17 @@ public class CountryCodeConverter {
         try {
             List<String> lines = Files.readAllLines(Paths.get(getClass()
                     .getClassLoader().getResource(filename).toURI()));
-
-            // TODO Task: use lines to populate the instance variable(s)
-
+            // TODO (DONE) Task: use lines to populate the instance variable(s)
+            for (int i = 1; i != lines.size(); i++) {
+                String[] entry = lines.get(i).split("\\t");
+                countryDictionary.put(entry[0], entry[2]);
+                codeDictionary.put(entry[2], entry[0]);
+            }
+            // System.out.println(countryDictionary);
         }
         catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
         }
-
     }
 
     /**
@@ -50,7 +54,14 @@ public class CountryCodeConverter {
      * @return the name of the country corresponding to the code
      */
     public String fromCountryCode(String code) {
-        // TODO Task: update this code to use an instance variable to return the correct value
+        // TODO (DONE) Task: update this code to use an instance variable to return the correct value
+        Collection<String> set = codeDictionary.keySet();
+        for (String entry : set) {
+            String value = ((HashMap) codeDictionary).get(entry).toString();
+            if (entry.equals(code.toUpperCase())) {
+                return value;
+            }
+        }
         return code;
     }
 
@@ -60,8 +71,16 @@ public class CountryCodeConverter {
      * @return the 3-letter code of the country
      */
     public String fromCountry(String country) {
-        // TODO Task: update this code to use an instance variable to return the correct value
-        return country;
+        // TODO (DONE) Task: update this code to use an instance variable to return the correct value
+
+        for (String entry : countryDictionary.keySet()) {
+
+            if (entry.equals(country)) {
+                String value = ((HashMap) countryDictionary).get(entry).toString();
+                return value.toLowerCase();
+            }
+        }
+        return null;
     }
 
     /**
@@ -69,7 +88,7 @@ public class CountryCodeConverter {
      * @return how many countries are included in this code converter.
      */
     public int getNumCountries() {
-        // TODO Task: update this code to use an instance variable to return the correct value
-        return 0;
+        // TODO (DONE) Task: update this code to use an instance variable to return the correct value
+        return codeDictionary.size();
     }
 }

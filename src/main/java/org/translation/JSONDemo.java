@@ -13,16 +13,25 @@ public class JSONDemo {
      * @param args not used
      */
     public static void main(String[] args) {
+        // make a String called jsonData (2 objects, with two keys each object)
         String jsonData = "[{\"key1\" : \"string1a\", \"key2\":21}, {\"key1\" : \"string1b\", \"key2\":22}]";
+        // make a JSONArray (iterable object) called jsonArray passing in the jsonData string
         JSONArray jsonArray = new JSONArray(jsonData);
+        // print the contents of the jsonArray iterable object
         System.out.println(jsonArray);
+        // print the length of the jsonArray object -- should be 2.
         System.out.println(jsonArray.length());
         // note that we can use jsonArray.get, but its return type is just Object,
         // which isn't as useful as below.
+        // create JSON Obj class called jsonObject, and let it be the first object in jsonArray
         JSONObject jsonObject = jsonArray.getJSONObject(0);
+        // print the object
         System.out.println(jsonObject);
+        // print the string paired with key1, object 1
         System.out.println(jsonObject.getString("key1"));
+        // print the string of the interger paired with key2, object 1
         System.out.println(jsonObject.getInt("key2"));
+        // print the string of the 2nd object's key 1.
         System.out.println(getKeyOneOfSecond(jsonArray));
     }
 
@@ -33,8 +42,9 @@ public class JSONDemo {
      * @return value of key "key1" from the second object in the given jsonArray
      */
     public static String getKeyOneOfSecond(JSONArray jsonArray) {
-        // TODO: Complete this method.
-        return "";
+        // TODO: (DONE) Complete this method.
+        JSONObject jsonObject = jsonArray.getJSONObject(1);
+        return jsonObject.getString("key1");
     }
 
 }
