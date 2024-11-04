@@ -185,7 +185,7 @@ we actually display to the user of our program.
 - Open each of these files to check what kind of information they
 contain. Notice that each of the `.txt` files contains a header row at the top, which should be ignored when reading the data.
 - **Each member of your team should pick a random country and language code
-from `sample.json` and determine the corresponding country and langauge.**
+from `sample.json` and determine the corresponding country and language.**
 
 - **For the language code you picked, complete the TODO in `JSONTranslationExample.java`.**
   - each group member should make a pull request with their completed code. 
